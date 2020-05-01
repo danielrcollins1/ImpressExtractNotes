@@ -20,8 +20,11 @@ public class ImpressExtractNotes {
 	/** Tag for notes section */
 	final static String NOTES_TAG = "h3";
 
-	/** Symbol for underlining titles */
-	final static char UNDERLINE = '-';
+	/** Markdown symbol for slide title start. */
+	final static String TITLE_MARK_START = "## ";
+	
+	/** Markdown symbol for slide title end. */
+	final static String TITLE_MARK_END = " ##";
 
 	//-----------------------------------------------------------------
 	//  Fields
@@ -43,14 +46,19 @@ public class ImpressExtractNotes {
 	/**
 	*  Main method.
 	*/
-	public static void main (String[] args) throws IOException {
+	public static void main (String[] args) {
 		ImpressExtractNotes extractor = new ImpressExtractNotes();
 		extractor.parseArgs(args);
 		if (extractor.exitAfterArgs) {
 			extractor.printUsage();
 		}
 		else {
-			extractor.convertFile();
+			try {
+				extractor.convertFile();
+			}
+			catch (IOException e) {
+				System.err.println("File I/O error.");
+			}
 		}
 	}
 
@@ -101,9 +109,7 @@ public class ImpressExtractNotes {
 				}
 			}
 			else if (s.startsWith("<" + NOTES_TAG)) {
-				outFile.println(lastTitle);
-				outFile.println(new String(new char[lastTitle.length()])
-					.replace('\0', UNDERLINE));
+				outFile.println(TITLE_MARK_START + lastTitle + TITLE_MARK_END);
 				inNotes = true;
 			}
 			else if (inNotes) {
