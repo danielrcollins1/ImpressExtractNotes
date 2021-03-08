@@ -21,10 +21,10 @@ public class ImpressExtractNotes {
 	final static String NOTES_TAG = "h3";
 
 	/** Markdown symbol for slide title start. */
-	final static String TITLE_MARK_START = "## ";
+	final static String TITLE_MARK_START = "# ";
 	
 	/** Markdown symbol for slide title end. */
-	final static String TITLE_MARK_END = " ##";
+	final static String TITLE_MARK_END = " #";
 
 	//-----------------------------------------------------------------
 	//  Fields
